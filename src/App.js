@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import {Box, Grid, Paper} from "@mui/material";
+import styled from "@emotion/styled";
+import MenuControl from "./components/menu/MenuControl";
+import MyMenuListItem from "./components/menu/MyMenuListItem";
+import {BrowserRouter} from "react-router-dom";
+import FileContent from "./components/FileContent";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const Item = styled(Paper)(() => ({
+        textAlign: 'center',
+    }));
+
+
+    return (
+        <BrowserRouter>
+            <Box sx={{display: "flex", justifyContent: "center", backgroundColor: "#383a59", height: "937px"}}>
+                <Grid container>
+                    <Grid item md={3} sx={{margin: "1%"}}>
+                        <Item sx={{height: "900px", overflowY: "auto"}}>
+                            <MenuControl/>
+                            <MyMenuListItem/>
+                        </Item>
+                    </Grid>
+                    <Grid item md={8.64}
+                          sx={{marginTop: "1%", marginRight: "1%", marginBottom: "1%", overflow: "none"}}>
+                        <Item sx={{height: "900px"}}>
+                            <FileContent sx={{height: "100%"}}/>
+                        </Item>
+                    </Grid>
+                </Grid>
+            </Box>
+        </BrowserRouter>
+    );
 }
 
 export default App;
