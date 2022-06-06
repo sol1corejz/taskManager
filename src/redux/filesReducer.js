@@ -38,11 +38,6 @@ let initialState = {
             id: 5,
             name: "FILE 6",
             priority: 3
-        },
-        {
-            id: 6,
-            name: "FILE 6",
-            priority: 3
         }
     ]
 }

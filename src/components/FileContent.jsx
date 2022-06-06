@@ -9,6 +9,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import {addFile, changeFileName, changeFilePriority} from "../redux/filesReducer";
 import SaveIcon from '@mui/icons-material/Save';
 import Priority from "./Priority";
+import {addTask} from "../redux/tasksReducer";
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -29,18 +30,20 @@ const FileContent = () => {
     let fileName = ''
     let fileId = null
     let fileTasks = []
+    let filePr = null
 
     if (file.length) {
         fileName = file[0].name
         fileId = file[0].id
+        filePr = file[0].priority
     }
     fileTasks = useSelector(state => state.tasksReducer.tasks.filter(task => task.fileId === fileId))
 
     const [isEdit, setIsEdit] = useState()
     const dispatch = useDispatch()
     const [name, setName] = useState('')
+    const [taskName, setTaskName] = useState('')
 
-    let filePr = null
 
     const takeFilePriority = (priority) => {
         filePr = priority;
@@ -57,6 +60,11 @@ const FileContent = () => {
         if (e.key === "Enter") {
             changeF()
         }
+    }
+
+    const addT = () => {
+        dispatch(addTask(taskName, fileId))
+        setTaskName('')
     }
 
     return (
@@ -87,7 +95,7 @@ const FileContent = () => {
                     <Priority fileId={fileId} takeFilePriority={takeFilePriority}/>
                     <TextField value={name} onKeyPress={(e) => handleKey(e)} placeholder="Имя файла" variant="standard"
                                onChange={(e) => setName(e.currentTarget.value)}/>
-                    <ListItemIcon sx={{marginLeft: "20px", alignSelf:"center"}} onClick={changeF}>
+                    <ListItemIcon sx={{marginLeft: "20px", alignSelf: "center"}} onClick={changeF}>
                         <SaveIcon fontSize={"large"}/>
                     </ListItemIcon>
                 </Item>
@@ -101,6 +109,15 @@ const FileContent = () => {
                 height: "90%",
                 boxSizing: "border-box"
             }}>
+                <div>
+                    <TextField sx={{marginRight: "20px"}}
+                               value={taskName}
+                               variant="standard"
+                               onChange={(e) => setTaskName(e.currentTarget.value)}
+                               placeholder="Задача"/>
+                    <Button variant="outlined" onClick={addT}>Add Task</Button>
+                </div>
+
                 {fileTasks.map(task => <Task key={task.id} id={task.id} name={task.name} isDone={task.isDone}/>)}
             </Item>
         </Stack>

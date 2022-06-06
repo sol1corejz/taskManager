@@ -4,15 +4,19 @@ import MenuControl from "./components/menu/MenuControl";
 import MyMenuListItem from "./components/menu/MyMenuListItem";
 import {BrowserRouter} from "react-router-dom";
 import FileContent from "./components/FileContent";
-
+import Login from "./components/Login/Login";
+import useToken from "./useToken";
 
 function App() {
+    const {token, setToken} = useToken();
 
     const Item = styled(Paper)(() => ({
         textAlign: 'center',
     }));
 
-
+    if (!token) {
+        return <Login setToken={setToken}/>
+    }
     return (
         <BrowserRouter>
             <Box sx={{display: "flex", justifyContent: "center", backgroundColor: "#383a59", height: "937px"}}>
@@ -31,6 +35,7 @@ function App() {
                     </Grid>
                 </Grid>
             </Box>
+            }>
         </BrowserRouter>
     );
 }

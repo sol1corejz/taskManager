@@ -5,7 +5,6 @@ import {useDispatch, useSelector} from "react-redux";
 
 const Priority = ({fileId, takeFilePriority}) => {
 
-    const dispatch = useDispatch()
 
     const filePriority = useSelector(state => state.filesReducer.files.filter(file => file.id === fileId))[0].priority
 
@@ -20,6 +19,7 @@ const Priority = ({fileId, takeFilePriority}) => {
         <FormControl variant="standard" sx={{m: 1, minWidth: 70, marginRight: "20px"}}>
             <InputLabel id="demo-simple-select-standard-label">Priority</InputLabel>
             <Select
+                value={priority}
                 onChange={handleChange}
                 label="Priority"
             >
